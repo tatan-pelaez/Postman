@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: localhost
--- Tiempo de generación: 09-06-2024 a las 16:22:09
+-- Tiempo de generación: 09-06-2024 a las 16:45:23
 -- Versión del servidor: 8.0.17
 -- Versión de PHP: 7.3.10
 
@@ -95,38 +95,9 @@ CREATE TABLE `historial` (
   `PRESUPUESTO` bigint(20) UNSIGNED NOT NULL,
   `TEMPERATURA` decimal(10,7) NOT NULL,
   `TEMPERATURAMAXIMA` decimal(10,7) NOT NULL,
-  `TEMPERATURAMINIMA` decimal(10,7) NOT NULL
+  `TEMPERATURAMINIMA` decimal(10,7) NOT NULL,
+  `FK_CIUDAD` bigint(20) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Volcado de datos para la tabla `historial`
---
-
-INSERT INTO `historial` (`PK_HISTORIAL`, `created_at`, `updated_at`, `deleted_at`, `CIUDADDESTINO`, `CONVERSION`, `HUMEDAD`, `IPCONSULTA`, `LATITUD`, `LONGITUD`, `MONEDAREPRESENTACION`, `NOMBREMONEDA`, `NOMBREPC`, `PAISDESTINO`, `ORIGEN`, `PRECIO`, `PRESUPUESTO`, `TEMPERATURA`, `TEMPERATURAMAXIMA`, `TEMPERATURAMINIMA`) VALUES
-(4, '2024-06-09 03:40:55', '2024-06-09 03:40:55', NULL, 'Wolverhampton', '907.1747', 75, '127.0.0.1', '52.5855000', '-2.1230000', 'GBP', 'Pound sterling', 'DESKTOP-E74F6U6', 'Inglaterra', 'COP', '0.0002', 4550000, '281.3800000', '282.4800000', '280.3800000'),
-(5, '2024-06-09 03:41:10', '2024-06-09 03:41:10', NULL, 'Wolverhampton', '3864872.8224', 75, '127.0.0.1', '52.5855000', '-2.1230000', 'GBP', 'Pound sterling', 'DESKTOP-E74F6U6', 'Inglaterra', 'EUR', '0.8494', 4550000, '281.3800000', '282.4800000', '280.3800000');
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `migrations`
---
-
-CREATE TABLE `migrations` (
-  `id` int(10) UNSIGNED NOT NULL,
-  `migration` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `batch` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Volcado de datos para la tabla `migrations`
---
-
-INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
-(1, '2019_12_14_000001_create_personal_access_tokens_table', 1),
-(2, '2024_06_08_162439_create_paises_table', 1),
-(3, '2024_06_08_162445_create_ciudades_table', 1),
-(4, '2024_06_08_220414_create_historial_table', 2);
 
 -- --------------------------------------------------------
 
@@ -157,24 +128,6 @@ INSERT INTO `paises` (`created_at`, `updated_at`, `PK_PAIS`, `deleted_at`, `TX_N
 ('2024-06-08 22:05:26', '2024-06-08 22:05:26', 7, NULL, 'Japón', 'JP', 'JPY', 1),
 ('2024-06-08 22:05:41', '2024-06-08 22:05:41', 8, NULL, 'México', 'MX', 'MXN', 0);
 
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `personal_access_tokens`
---
-
-CREATE TABLE `personal_access_tokens` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `tokenable_type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `tokenable_id` bigint(20) UNSIGNED NOT NULL,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `token` varchar(64) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `abilities` text COLLATE utf8mb4_unicode_ci,
-  `last_used_at` timestamp NULL DEFAULT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
 --
 -- Índices para tablas volcadas
 --
@@ -190,27 +143,14 @@ ALTER TABLE `ciudades`
 -- Indices de la tabla `historial`
 --
 ALTER TABLE `historial`
-  ADD PRIMARY KEY (`PK_HISTORIAL`);
-
---
--- Indices de la tabla `migrations`
---
-ALTER TABLE `migrations`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`PK_HISTORIAL`),
+  ADD KEY `historial_fk_ciudad_foreign` (`FK_CIUDAD`);
 
 --
 -- Indices de la tabla `paises`
 --
 ALTER TABLE `paises`
   ADD PRIMARY KEY (`PK_PAIS`);
-
---
--- Indices de la tabla `personal_access_tokens`
---
-ALTER TABLE `personal_access_tokens`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `personal_access_tokens_token_unique` (`token`),
-  ADD KEY `personal_access_tokens_tokenable_type_tokenable_id_index` (`tokenable_type`,`tokenable_id`);
 
 --
 -- AUTO_INCREMENT de las tablas volcadas
@@ -226,25 +166,13 @@ ALTER TABLE `ciudades`
 -- AUTO_INCREMENT de la tabla `historial`
 --
 ALTER TABLE `historial`
-  MODIFY `PK_HISTORIAL` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
-
---
--- AUTO_INCREMENT de la tabla `migrations`
---
-ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `PK_HISTORIAL` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `paises`
 --
 ALTER TABLE `paises`
   MODIFY `PK_PAIS` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
-
---
--- AUTO_INCREMENT de la tabla `personal_access_tokens`
---
-ALTER TABLE `personal_access_tokens`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- Restricciones para tablas volcadas
@@ -255,6 +183,12 @@ ALTER TABLE `personal_access_tokens`
 --
 ALTER TABLE `ciudades`
   ADD CONSTRAINT `ciudades_fk_pais_foreign` FOREIGN KEY (`FK_PAIS`) REFERENCES `paises` (`PK_PAIS`);
+
+--
+-- Filtros para la tabla `historial`
+--
+ALTER TABLE `historial`
+  ADD CONSTRAINT `historial_fk_ciudad_foreign` FOREIGN KEY (`FK_CIUDAD`) REFERENCES `ciudades` (`PK_CIUDAD`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
