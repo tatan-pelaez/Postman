@@ -1,0 +1,118 @@
+{
+	"info": {
+		"_postman_id": "546eff8e-601f-4a53-b1b6-9455d8f44b6a",
+		"name": "APIS CLIMA Y MONEDA",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "25122858"
+	},
+	"item": [
+		{
+			"name": "API CLIMA POR CIUDAD",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://api.openweathermap.org/data/2.5/weather?q=Tsumuura&appid=9debfa862ae08c87890625483876aa7e",
+					"protocol": "https",
+					"host": [
+						"api",
+						"openweathermap",
+						"org"
+					],
+					"path": [
+						"data",
+						"2.5",
+						"weather"
+					],
+					"query": [
+						{
+							"key": "q",
+							"value": "Tsumuura"
+						},
+						{
+							"key": "appid",
+							"value": "9debfa862ae08c87890625483876aa7e"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "LISTA MONEDAS",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://api.getgeoapi.com/v2/currency/list?api_key=23c2f51a45b1fb4b550a62134abb8aabdb94d23f&from=COP&to=USD",
+					"protocol": "https",
+					"host": [
+						"api",
+						"getgeoapi",
+						"com"
+					],
+					"path": [
+						"v2",
+						"currency",
+						"list"
+					],
+					"query": [
+						{
+							"key": "api_key",
+							"value": "23c2f51a45b1fb4b550a62134abb8aabdb94d23f"
+						},
+						{
+							"key": "from",
+							"value": "COP"
+						},
+						{
+							"key": "to",
+							"value": "USD"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CONVERSOR MONEDA",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://api.getgeoapi.com/v2/currency/convert?api_key=23c2f51a45b1fb4b550a62134abb8aabdb94d23f&from=COP&to=DK&amount=1000000",
+					"protocol": "https",
+					"host": [
+						"api",
+						"getgeoapi",
+						"com"
+					],
+					"path": [
+						"v2",
+						"currency",
+						"convert"
+					],
+					"query": [
+						{
+							"key": "api_key",
+							"value": "23c2f51a45b1fb4b550a62134abb8aabdb94d23f"
+						},
+						{
+							"key": "from",
+							"value": "COP"
+						},
+						{
+							"key": "to",
+							"value": "DK"
+						},
+						{
+							"key": "amount",
+							"value": "1000000"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
